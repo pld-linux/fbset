@@ -1,51 +1,62 @@
 #!/bin/sh
+# $Id$
 #
-# hdpram        Sets up fbcon video modes.
+# fbset:	Sets up fbcon video modes.
 #
 #
 # chkconfig:	2345 5 95
-# description:	fbset is a utility with which fbcons video modes can be read\
+# description:	fbset is a utility with which fbcons video modes can be read
 #		and changed
+#
+# config:	/etc/sysconfig/fbset
 
 
 # Source function library
 . /etc/rc.d/init.d/functions
 
 # Get service config
-[ -f /etc/sysconfig/fbset ] && . /etc/sysconfig/fbset
+if [ -f /etc/sysconfig/fbset ]; then
+	. /etc/sysconfig/fbset
+fi
 
 # See how we were called.
 case "$1" in
   start)
-	# Check if we have framebuffer in kernel.
-	if [ -f /proc/fb ]; then
-		# /proc files show as files with size=0, this is a workaround.
-		cat /proc/fb | grep -q "." || exit 0
-	else
-		exit 0
-	fi
+	# Check if service is already running?
+	if [ ! -f /var/lock/subsys/fbset ]; then
+		# Check if we have framebuffer in kernel.
+		if [ -f /proc/fb ]; then
+			# /proc files show as files with size=0, this is a workaround.
+			cat /proc/fb | grep -q "." || exit 0
+		else
+			exit 0
+		fi
 
-	if [ -n "${FBMODE_default}" ]; then
-		show "Setting default video mode"
-		busy
-		/usr/sbin/fbset -a ${FBMODE_default}
-		deltext
-		ok
-	fi
-	for tty in /dev/tty[0-9]*; do
-		eval FBMODE=\${FBMODE_${tty#/dev/}}
-		if [ -n "${FBMODE}" ]; then
-			# XXX fuser $tty <- sprawdziæ, czy tty jest wolna.
-			show "Setting $tty video mode"
+		if [ -n "${FBMODE_default}" ]; then
+			show "Setting default video mode"
 			busy
-			/usr/bin/open -c ${tty#/dev/tty} -- /usr/sbin/fbset ${FBMODE}
+			# check if devfs (workaround: -a option don't work at all)
+			if [ -d /dev/vc ]; then
+				for a in `ls /dev/vc/*`; do
+					b=`ls $a | sed 's/\/dev\/vc\///g'`
+					/usr/bin/open -c $b -- /usr/sbin/fbset $FBMODE_default
+				done
+			else
+				for a in `ls /dev/tty[0-9] && ls /dev/tty[0-9][0-9]`; do
+					b=`ls $a | sed 's/\/dev\/tty//g'`
+					/usr/bin/open -c $b -- /usr/sbin/fbset $FBMODE_default
+				done
+			fi
 			deltext
 			ok
 		fi
-	done
-	touch /var/lock/subsys/fbset
+		touch /var/lock/subsys/fbset
+	else
+		msg_Already_Running "fbset"
+		exit 1
+	fi
 	;;
-    stop)	
+    stop)
 	rm -f /var/lock/subsys/fbset
 	;;
   status)
