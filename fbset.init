@@ -27,6 +27,10 @@ function try_load
 		exit 0
 	fi
 }
+# Setting default depth
+if [ -n "${DEPTH}" ]; then
+	DEPTH_options="-depth ${DEPTH}"
+fi
 
 # See how we were called.
 case "$1" in
@@ -49,12 +53,12 @@ case "$1" in
 			if [ -d /dev/vc ]; then
 				for a in `ls /dev/vc/*`; do
 					b=`ls $a | sed 's/\/dev\/vc\///g'`
-					/usr/bin/open -c $b -- /usr/sbin/fbset -fb /dev/fb/0 $FBMODE_default
+					/usr/bin/open -c $b -- /usr/sbin/fbset -fb /dev/fb/0 ${DEPTH_options} $FBMODE_default
 				done
 			else
 				for a in `ls /dev/tty[0-9] && ls /dev/tty[0-9][0-9]`; do
 					b=`ls $a | sed 's/\/dev\/tty//g'`
-					/usr/bin/open -c $b -- /usr/sbin/fbset $FBMODE_default
+					/usr/bin/open -c $b -- /usr/sbin/fbset ${DEPTH_options} $FBMODE_default
 				done
 			fi
 			deltext
@@ -67,7 +71,11 @@ case "$1" in
 	fi
 	;;
     stop)
-	rm -f /var/lock/subsys/fbset
+    	if [ -f /var/lock/subsys/fbset ]; then
+		rm -f /var/lock/subsys/fbset
+	else
+		msg_not_running fbset
+	fi
 	;;
   status)
 	# Check if we have framebuffer in kernel.
@@ -81,8 +89,23 @@ case "$1" in
 	$0 stop
 	$0 start
 	;;
+  restart-all)
+	if [ -f /var/lock/subsys/fbset ]; then
+		if [ -n "${FBMODE_default}" ]; then
+			show "Setting default video mode"
+			busy
+			/usr/sbin/fbset -a ${DEPTH_options} $FBMODE_default
+			deltext
+			ok
+		else
+			echo "No FBMODE_default set"
+		fi
+	else
+		msg_not_running fbset
+	fi
+	;;
   *)
-	msg_usage "$0 {start|stop|status|restart|reload}"
+	msg_usage "$0 {start|stop|status|restart|restart-all|reload}"
 	exit 1
 esac
 
