@@ -6,6 +6,7 @@ Release:	22
 License:	GPL
 Group:		Applications/System
 Source0:	http://home.tvd.be/cr26864/Linux/fbdev/%{name}-%{version}.tar.gz
+# Source0-md5: e547cfcbb8c1a4f2a6b8ba4acb8b7164
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-fb.modes
