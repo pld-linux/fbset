@@ -47,10 +47,10 @@ na wpisy fb.modes) wymaga perla.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d} \
-	$RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,8}}
+	$RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{5,8}}
 
-install fbset $RPM_BUILD_ROOT%{_sbindir}
-install modeline2fb $RPM_BUILD_ROOT%{_sbindir}
+install fbset $RPM_BUILD_ROOT%{_bindir}
+install modeline2fb $RPM_BUILD_ROOT%{_bindir}
 install fb.modes.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install fbset.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
@@ -74,8 +74,8 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc etc/*
-%attr(755,root,root) %{_sbindir}/fbset
-%attr(755,root,root) %{_sbindir}/modeline2fb
+%attr(755,root,root) %{_bindir}/fbset
+%attr(755,root,root) %{_bindir}/modeline2fb
 %attr(754,root,root) /etc/rc.d/init.d/fbset
 %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/fbset
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/fb.modes

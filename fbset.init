@@ -71,7 +71,7 @@ case "$1" in
 			fi
 
 			for cons in $FBTERMINALS; do
-				/usr/bin/open -c $cons -- /usr/sbin/fbset -fb \
+				/usr/bin/open -c $cons -- /usr/bin/fbset -fb \
 				  $FBDEV ${DEPTH_options} $FBMODE_default
 			done
 			ok
