@@ -22,14 +22,18 @@
 # Virtual Framebuffer - vfb
 # VGA 16-color - vga16fb
 
-# Select defaulf display mode
+# Select default display mode
 FBMODE_default=
+
 # Select card driver
-FBMODULE=
+FBMODULE=a
+
 # Display color depth
-DEPTH=
-# Framebuffer number 
+DEPTH=a
+
+# Framebuffer number if you have two or more
 FBDEV_NUM=
+
 # Terminal number to run framebuffer on:
 FBTERMINALS=
 
