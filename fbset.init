@@ -60,11 +60,11 @@ case "$1" in
 				DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
 				FBDEV=`echo /dev/fb/${FBDEV_NUM}`
 			else
-				DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d :`"
+				DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d:`"
 				FBDEV=`echo /dev/fb${FBDEV_NUM}`
 			fi
 
-			for cons in "$DEVICES"; do
+			for cons in $DEVICES; do
 				/usr/bin/open -c $cons -- /usr/sbin/fbset -fb $FBDEV ${DEPTH_options} $FBMODE_default
 			done
 			
