@@ -56,8 +56,6 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/fb.modes
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/fbset
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/fbset
 
-gzip -9nf etc/fb.modes*
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
