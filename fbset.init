@@ -26,7 +26,6 @@ case "$1" in
 	fi
 
 	if [ -n "${FBMODE_default}" ]; then
-	echo STarting...
 		show "Setting default video mode"
 		busy
 		/usr/sbin/fbset -a ${FBMODE_default}
@@ -62,7 +61,7 @@ case "$1" in
 	$0 start
 	;;
   *)
-	echo "Usage: $0 {start|stop|status|restart|reload}"
+	msg_Usage "$0 {start|stop|status|restart|reload}"
 	exit 1
 esac
 
