@@ -2,7 +2,7 @@ Summary:	Framebuffer utilities for changing video modes.
 Summary(pl):	Nardzêdzie do zmieniania trybu graficznego we framebufferze
 Name:		fbset
 Version:	2.0.19990118
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/System
 Group(pl):	Aplikacje/System
@@ -28,7 +28,7 @@ make OPTFLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{sysconfig,rc.d/init.d},%{_sbindir},%{_mandir}/man{5,8}}
+install -d $RPM_BUILD_ROOT{/etc/{sysconfig,rc.d/init.d},%{_sbindir},%{_mandir}/man{5,8}}
 
 install -s fbset $RPM_BUILD_ROOT%{_sbindir}
 install fb.modes.5 $RPM_BUILD_ROOT%{_mandir}/man5
