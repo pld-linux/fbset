@@ -10,6 +10,7 @@ Source0:	http://www.cs.kuleuven.ac.be/~geert/bin/%{name}-19990118.tar.gz
 Source1:	fbset.init
 Source2:	fbset.sysconfig
 URL:		http://www.cs.kuleuven.ac.be/~geert/Console/
+Requires: open
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
