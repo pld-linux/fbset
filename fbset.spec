@@ -26,7 +26,7 @@ konsolach fbcon.
 %setup -q
 
 %build
-%{__make} OPTFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}"
+%{__make} OPTFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
