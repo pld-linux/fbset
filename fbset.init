@@ -72,9 +72,12 @@ case "$1" in
 
 			for cons in $FBTERMINALS; do
 				/usr/bin/con2fb $FBDEV $cons
-				/usr/bin/open -c $cons -w -- /usr/bin/fbset -fb \
-				  $FBDEV ${DEPTH_options} $FBMODE_default
+				/usr/bin/switchto $cons
+				/usr/bin/fbset -fb \
+				  $FBDEV ${DEPTH_options} $FBMODE_default \
+				  0<>/dev/tty$cons >&0 2>&0
 			done
+			/usr/bin/switchto 1
 			ok
 		fi
 		touch /var/lock/subsys/fbset
