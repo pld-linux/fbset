@@ -11,7 +11,7 @@ Source0:	http://www.cs.kuleuven.ac.be/~geert/bin/%{name}-%{version}.tar.gz
 Source1:	fbset.init
 Source2:	fbset.sysconfig
 URL:		http://www.cs.kuleuven.ac.be/~geert/Console/
-Requires: open
+Requires:	open
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -26,13 +26,13 @@ konsolach fbcon.
 %setup -q
 
 %build
-%{__make} OPTFLAGS="$RPM_OPT_FLAGS"
+%{__make} OPTFLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/etc/{sysconfig,rc.d/init.d},%{_sbindir},%{_mandir}/man{5,8}}
 
-install -s fbset $RPM_BUILD_ROOT%{_sbindir}
+install fbset $RPM_BUILD_ROOT%{_sbindir}
 install fb.modes.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install fbset.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
