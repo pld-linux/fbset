@@ -4,7 +4,7 @@
 # fbset:	Sets up fbcon video modes.
 #
 #
-# chkconfig:	2345 71 29
+# chkconfig:	2345 69 31
 # description:	fbset is a utility with which fbcons video modes can be read
 #		and changed
 #
