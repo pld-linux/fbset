@@ -29,7 +29,7 @@ FBMODE_default=
 FBMODULE=
 
 # Display color depth
-DEPTH=a
+DEPTH=
 
 # Framebuffer number if you have two or more
 FBDEV_NUM=
