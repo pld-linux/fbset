@@ -2,7 +2,7 @@ Summary:	Framebuffer utilities for changing video modes
 Summary(pl):	Narzêdzie do zmieniania ustawieñ framebuffera
 Name:		fbset
 Version:	2.1
-Release:	22
+Release:	23
 License:	GPL
 Group:		Applications/System
 Source0:	http://home.tvd.be/cr26864/Linux/fbdev/%{name}-%{version}.tar.gz
@@ -58,6 +58,7 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/fb.modes
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/fbset
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/fbset
+rm -r etc/CVS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
