@@ -7,6 +7,8 @@
 FBMODE_default=
 FBMODULE=
 DEPTH=
+FBDEV_NUM=
 #FBMODE_default="640x480-100"
 #FBMODULE=matroxfb
 #DEPTH=16
+#FBDEV_NUM=0
