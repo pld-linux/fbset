@@ -10,7 +10,7 @@ Source: http://www.cs.kuleuven.ac.be/~geert/bin/fbset-19990118.tar.gz
 Source1: fbset.init
 Source2: fbset.sysconfig
 URL: http://www.cs.kuleuven.ac.be/~geert/Console/
-BuildRoot: /var/tmp/%{name}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 fbset is a utility for querying and changing video modes of fbcon consoles.
