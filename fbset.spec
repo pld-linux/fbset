@@ -45,12 +45,10 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/fbset
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/fbset
 
 %post
-/sbin/chkconfig --add fbset
+%chkconfig_add
 
 %preun
-if [ "$1" = "0" ]; then
-	/sbin/chkconfig --del fbset
-fi
+%chkconfig_del
 
 %clean
 rm -rf $RPM_BUILD_ROOT
