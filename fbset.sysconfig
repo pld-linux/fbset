@@ -5,7 +5,7 @@
 # See /etc/fb.modes for sample video mode definitions.
 #
 # Avaliable modules for specific cards:
-# 
+#
 # Ati Rage 128 - aty128fb
 # Ati Radeon - radeonfb
 # Cirrus Logic - clgenfb
@@ -15,7 +15,7 @@
 # NeoMagic PCI - neofb
 # Permedia 2 - pm2fb
 # Permedia 3 - pm3fb
-# Nvidia Cards - rivafb 
+# Nvidia Cards - rivafb
 # 3dFx Voodoo 1/2  - sstfb
 # 3Dfx Banshee/Voodoo3 - tdfxfb
 # Trident Cards - tridentfb
