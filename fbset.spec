@@ -1,44 +1,63 @@
 Summary: Framebuffer utilities for changing video modes.
+Summary(pl): Nardzêdzie do zmieniania trybu graficznego we framebufferze.
 Name: fbset
 Version: 2.0.19990118
-Release: 2
+Release: 3
 Copyright: GPL
 Group: Applications/System
+Group(pl): Aplikacje/System
 Source: http://www.cs.kuleuven.ac.be/~geert/bin/fbset-19990118.tar.gz
-Patch: fbset-2.0-pre-19981028.patch
+Source1: fbset.init
+Source2: fbset.sysconfig
+URL: http://www.cs.kuleuven.ac.be/~geert/Console/
 BuildRoot: /var/tmp/%{name}-root
 
 %description
 fbset is a utility for querying and changing video modes of fbcon consoles.
 
+%description -l pl
+fbset jest narzêdziem do sprawdzania i zmieniania trybu graficznego na
+konsolach fbcon.
+
 %prep
 %setup -q -n fbset
-%patch -p1
 
 %build
-make
+make OPTFLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/dev
-mkdir -p $RPM_BUILD_ROOT/usr/sbin
-mkdir -p $RPM_BUILD_ROOT/usr/man/man5
-mkdir -p $RPM_BUILD_ROOT/usr/man/man8
-make install PREFIX=$RPM_BUILD_ROOT
-strip $RPM_BUILD_ROOT/usr/sbin/fbset
-%ifarch sparc sparc64
-mkdir -p $RPM_BUILD_ROOT/etc
-cp etc/fb.modes.ATI $RPM_BUILD_ROOT/etc/fb.modes
-%endif
+install -d $RPM_BUILD_ROOT{/dev,/etc/{sysconfig,rc.d/init.d},%{_sbindir},%{_mandir}/man{5,8}}
+
+install -s fbset $RPM_BUILD_ROOT%{_sbindir}
+install fb.modes.5 $RPM_BUILD_ROOT%{_mandir}/man5
+install fbset.8 $RPM_BUILD_ROOT%{_mandir}/man8
+
+install etc/fb.modes.ATI $RPM_BUILD_ROOT/etc/fb.modes
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/fbset
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/fbset
+
+mknod $RPM_BUILD_ROOT/dev/fb0 c 29 0
+
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/*
+
+%post
+/sbin/chkconfig --add fbset
+
+%preun
+if [ "$1" = "0" ]; then
+	/sbin/chkconfig --del fbset
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root)
-/dev/*
-/usr/sbin/*
-/usr/man/man[58]/*
-%ifarch sparc sparc64
-%config /etc/fb.modes
-%endif
+%defattr(644,root,root,0755)
+/dev/fb0
+%attr(755,root,root) /usr/sbin/fbset
+%attr(754,root,root) /etc/rc.d/init.d/fbset
+%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/fbset
+%config(noreplace) %verify(not size mtime md5) /etc/fb.modes
+%{_mandir}/man8/*

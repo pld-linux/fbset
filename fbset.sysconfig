@@ -1,0 +1,20 @@
+# This file lets you set your default console video mode and
+# video modes for individual virtual consoles.
+# See /etc/fb.modes for sample video mode definitions.
+
+FBMODE_default=
+#FBMODE_default="640x480-100"
+
+FBMODE_tty1=
+#FBMODE_tty1="800x600-100"
+FBMODE_tty2=
+FBMODE_tty3=
+FBMODE_tty4=
+FBMODE_tty5=
+FBMODE_tty6=
+FBMODE_tty7=
+FBMODE_tty8=
+FBMODE_tty9=
+FBMODE_tty10=
+FBMODE_tty11=
+FBMODE_tty12=
