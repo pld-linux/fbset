@@ -35,7 +35,6 @@ case "$1" in
 	if [ ! -f /var/lock/subsys/fbset ]; then
 		# Check if we have framebuffer in kernel.
 		if [ -f /proc/fb ]; then
-			echo a
 			# /proc files show as files with size=0, this is a workaround.
 			cat /proc/fb | grep -q "." || try_load
 		else
