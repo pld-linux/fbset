@@ -2,7 +2,7 @@ Summary:	Framebuffer utilities for changing video modes
 Summary(pl):	Narzêdzie do zmieniania ustawieñ framebuffera
 Name:		fbset
 Version:	2.1
-Release:	25
+Release:	26
 License:	GPL
 Group:		Applications/System
 Source0:	http://home.tvd.be/cr26864/Linux/fbdev/%{name}-%{version}.tar.gz
