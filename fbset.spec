@@ -12,7 +12,7 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-fixmode.patch
 URL:		http://www.cs.kuleuven.ac.be/~geert/Console/
-BuildRequires:	flex
+BuildRequires:	bison
 Prereq:		/sbin/chkconfig
 Requires:	open
 Requires:	sed
