@@ -58,4 +58,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(754,root,root) /etc/rc.d/init.d/fbset
 %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/fbset
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/fb.modes
-%{_mandir}/man8/*
+%{_mandir}/man*/*
