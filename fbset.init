@@ -62,7 +62,7 @@ case "$1" in
 		fi
 		touch /var/lock/subsys/fbset
 	else
-		msg_Already_Running "fbset"
+		msg_already_running "fbset"
 		exit 1
 	fi
 	;;
@@ -82,7 +82,7 @@ case "$1" in
 	$0 start
 	;;
   *)
-	msg_Usage "$0 {start|stop|status|restart|reload}"
+	msg_usage "$0 {start|stop|status|restart|reload}"
 	exit 1
 esac
 
