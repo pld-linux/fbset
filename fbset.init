@@ -5,7 +5,7 @@
 #
 #
 # chkconfig:	2345 69 31
-# description:	fbset is a utility with which fbcons video modes can be read
+# description:	fbset is a utility with which fbcons video modes can be read \
 #		and changed
 #
 # config:	/etc/sysconfig/fbset
