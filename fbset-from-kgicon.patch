@@ -1,0 +1,106 @@
+diff -Nur fbset-2.1.orig/fb.h fbset-2.1/fb.h
+--- fbset-2.1.orig/fb.h	Wed Jun 23 16:09:48 1999
++++ fbset-2.1/fb.h	Mon May 15 07:07:38 2000
+@@ -73,10 +73,16 @@
+ #define FB_ACCEL_MATROX_MGAG100	20	/* Matrox G100 (Productiva G100) */
+ #define FB_ACCEL_MATROX_MGAG200	21	/* Matrox G200 (Myst, Mill, ...) */
+ #define FB_ACCEL_SUN_CG14	22	/* Sun cgfourteen		 */
+-#define FB_ACCEL_SUN_BWTWO	23	/* Sun bwtwo			 */
+-#define FB_ACCEL_SUN_CGTHREE	24	/* Sun cgthree			 */
+-#define FB_ACCEL_SUN_TCX	25	/* Sun tcx			 */
+-#define FB_ACCEL_MATROX_MGAG400	26	/* Matrox G400			 */
++#define FB_ACCEL_SUN_BWTWO	23	/* Sun bwtwo			*/
++#define FB_ACCEL_SUN_CGTHREE	24	/* Sun cgthree			*/
++#define FB_ACCEL_SUN_TCX	25	/* Sun tcx			*/
++#define FB_ACCEL_MATROX_MGAG400	26	/* Matrox G400			*/
++#define FB_ACCEL_NV3		27	/* nVidia RIVA 128              */
++#define FB_ACCEL_NV4		28	/* nVidia RIVA TNT		*/
++#define FB_ACCEL_NV5		29	/* nVidia RIVA TNT2		*/
++#define FB_ACCEL_CT_6555x	30	/* C&T 6555x			*/
++#define FB_ACCEL_3DFX_BANSHEE	31	/* 3Dfx Banshee			*/
++#define FB_ACCEL_ATI_RAGE128	32	/* ATI Rage128 family		*/
+ 
+ struct fb_fix_screeninfo {
+ 	char id[16];			/* identification string eg "TT Builtin" */
+diff -Nur fbset-2.1.orig/fbset.c fbset-2.1/fbset.c
+--- fbset-2.1.orig/fbset.c	Wed Jun 23 16:11:46 1999
++++ fbset-2.1/fbset.c	Mon May 15 07:07:38 2000
+@@ -41,7 +41,8 @@
+      *  Default Frame Buffer Special Device Node
+      */
+ 
+-#define DEFAULT_FRAMEBUFFER	"/dev/fb0"
++#define DEFAULT_FRAMEBUFFER		"/dev/fb0"
++#define DEFAULT_FRAMEBUFFER_DEVFS	"/dev/fb/0"
+ 
+ 
+     /*
+@@ -199,6 +200,12 @@
+     { FB_ACCEL_SUN_CGTHREE, "Sun cg3" },
+     { FB_ACCEL_SUN_TCX, "Sun tcx" },
+     { FB_ACCEL_MATROX_MGAG400, "Matrox G400" },
++    { FB_ACCEL_NV3, "nVidia RIVA 128" },
++    { FB_ACCEL_NV4, "nVidia RIVA TNT" },
++    { FB_ACCEL_NV5, "nVidia RIVA TNT2" },
++    { FB_ACCEL_CT_6555x, "C&T 6555x" },
++    { FB_ACCEL_3DFX_BANSHEE, "3Dfx Banshee" },
++    { FB_ACCEL_ATI_RAGE128, "ATI Rage128 family" },
+ };
+ 
+ 
+@@ -213,7 +220,7 @@
+      *  Function Prototypes
+      */
+ 
+-int OpenFrameBuffer(const char *name);
++int OpenFrameBuffer(const char *name, int dodie);
+ void CloseFrameBuffer(int fh);
+ void GetVarScreenInfo(int fh, struct fb_var_screeninfo *var);
+ void SetVarScreenInfo(int fh, struct fb_var_screeninfo *var);
+@@ -253,7 +260,7 @@
+      *  Open the Frame Buffer Device
+      */
+ 
+-int OpenFrameBuffer(const char *name)
++int OpenFrameBuffer(const char *name, int dodie)
+ {
+     int fh;
+ 
+@@ -261,7 +268,8 @@
+ 	printf("Opening frame buffer device `%s'\n", name);
+ 
+     if ((fh = open(name, O_RDONLY)) == -1)
+-	Die("open %s: %s\n", name, strerror(errno));
++	if (dodie)
++	    Die("open %s: %s\n", name, strerror(errno));
+     return fh;
+ }
+ 
+@@ -977,14 +985,23 @@
+     if (Opt_version || Opt_verbose)
+ 	puts(VERSION);
+ 
+-    if (!Opt_fb)
+-	Opt_fb = DEFAULT_FRAMEBUFFER;
+-
+     /*
+      *  Open the Frame Buffer Device
+      */
+ 
+-    fh = OpenFrameBuffer(Opt_fb);
++    if (!Opt_fb) {
++	/* First try devfs style name */
++	Opt_fb = DEFAULT_FRAMEBUFFER_DEVFS;
++	fh = OpenFrameBuffer(Opt_fb, 0);
++	Opt_fb = DEFAULT_FRAMEBUFFER;
++	if (fh < 0) {
++	    /* If that fails try normal name */
++	    fh = OpenFrameBuffer(Opt_fb, 1);
++	}
++    } else {
++	/* Open the specified device */
++	fh = OpenFrameBuffer(Opt_fb, 1);
++    }
+ 
+     /*
+      *  Get the Video Mode

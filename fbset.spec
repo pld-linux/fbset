@@ -2,7 +2,7 @@ Summary:	Framebuffer utilities for changing video modes
 Summary(pl):	Narzêdzie do zmieniania trybu graficznego we framebufferze
 Name:		fbset
 Version:	2.1
-Release:	21
+Release:	22
 License:	GPL
 Group:		Applications/System
 Source0:	http://home.tvd.be/cr26864/Linux/fbdev/%{name}-%{version}.tar.gz
@@ -10,6 +10,7 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-fb.modes
 Patch0:		%{name}-fixmode.patch
+Patch1:		%{name}-from-kgicon.patch
 URL:		http://home.tvd.be/cr26864/Linux/fbdev/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -36,7 +37,8 @@ na wpisy fb.modes) wymaga perla.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %{__make} CC="%{__cc} %{rpmcflags}"
