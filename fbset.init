@@ -57,14 +57,18 @@ case "$1" in
 			
 			# check if devfs (workaround: -a option don't work at all)
 			if [ -d /dev/vc ]; then
-				DEVICES="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
+				if [ -z "$FBTERMINALS" ]; then
+					FBTERMINALS="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
+				fi
 				FBDEV=`echo /dev/fb/${FBDEV_NUM}`
 			else
-				DEVICES="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d:`"
+				if [ -z "$FBTERMINALS" ]; then
+					FBTERMINALS="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d:`"
+				fi
 				FBDEV=`echo /dev/fb${FBDEV_NUM}`
 			fi
 
-			for cons in $DEVICES; do
+			for cons in $FBTERMINALS; do
 				/usr/bin/open -c $cons -- /usr/sbin/fbset -fb $FBDEV ${DEPTH_options} $FBMODE_default
 			done
 			
