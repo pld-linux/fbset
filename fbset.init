@@ -73,6 +73,7 @@ case "$1" in
 			for cons in $FBTERMINALS; do
 				/usr/bin/open -c $cons -w -- /usr/bin/fbset -fb \
 				  $FBDEV ${DEPTH_options} $FBMODE_default
+				/usr/bin/con2fb $FBDEV $cons
 			done
 			ok
 		fi
