@@ -1,4 +1,4 @@
-Summary:	Framebuffer utilities for changing video modes.
+Summary:	Framebuffer utilities for changing video modes
 Summary(pl):	Nardzêdzie do zmieniania trybu graficznego we framebufferze
 Name:		fbset
 Version:	2.1
@@ -13,17 +13,18 @@ Source2:	%{name}.sysconfig
 Patch0:		%{name}-fixmode.patch
 URL:		http://www.cs.kuleuven.ac.be/~geert/Console/
 BuildRequires:	flex
-Requires:	open
 Prereq:		/sbin/chkconfig
+Requires:	open
+Requires:	sed
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 fbset is a utility for querying and changing video modes of fbcon
-consoles.
+terminals.
 
 %description -l pl
 fbset jest narzêdziem do sprawdzania i zmieniania trybu graficznego na
-konsolach fbcon.
+terminalach fbcon.
 
 %prep
 %setup -q
