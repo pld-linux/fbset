@@ -5,6 +5,7 @@ Version:	2.1
 Release:	1
 License:	GPL
 Group:		Applications/System
+Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	http://www.cs.kuleuven.ac.be/~geert/bin/%{name}-%{version}.tar.gz
 Source1:	fbset.init
@@ -39,8 +40,6 @@ install etc/fb.modes.ATI $RPM_BUILD_ROOT%{_sysconfdir}/fb.modes
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/fbset
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/fbset
-
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/*
 
 %post
 /sbin/chkconfig --add fbset
