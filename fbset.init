@@ -1,4 +1,3 @@
-		exit 1
 #!/bin/sh
 # $Id$
 #
@@ -75,14 +74,11 @@ case "$1" in
 				/usr/bin/open -c $cons -- /usr/bin/fbset -fb \
 				  $FBDEV ${DEPTH_options} $FBMODE_default
 			done
-
-			deltext
 			ok
 		fi
 		touch /var/lock/subsys/fbset
 	else
 		msg_already_running fbset
-		exit 1
 	fi
 	;;
   stop)
@@ -90,24 +86,28 @@ case "$1" in
 		rm -f /var/lock/subsys/fbset
 	else
 		msg_not_running fbset
-		exit 1
 	fi
 	;;
   status)
 	# Check if we have framebuffer in kernel.
 	if [ -f /proc/fb ]; then
 		# /proc files show as files with size=0, this is a workaround.
-		cat /proc/fb | grep -q "." || exit 0
-		nls "Frame buffer present."
+		cat /proc/fb | grep -q "." && nls "Frame buffer present." && exit 0
+		nls "Frame buffer not present."
+		exit 3
+	else
+		nls "Frame buffer not present."
+		exit 3
 	fi
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
+#	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 esac
 
 exit 0
