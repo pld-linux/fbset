@@ -62,13 +62,18 @@ case "$1" in
 					  "`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
 				fi
 				FBDEV=`echo /dev/fb/${FBDEV_NUM}`
+				pattern="s/\/dev\/vc\///g"
 			else
 				if [ -z "$FBTERMINALS" ]; then
 					FBTERMINALS=\
 					  "`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d:`"
 				fi
 				FBDEV=`echo /dev/fb${FBDEV_NUM}`
+				pattern="s/\/dev\/tty//g"
 			fi
+
+			# save old tty number
+			tty=`/usr/bin/tty | sed $pattern`
 
 			for cons in $FBTERMINALS; do
 				/usr/bin/con2fb $FBDEV $cons
@@ -77,7 +82,8 @@ case "$1" in
 				  $FBDEV ${DEPTH_options} $FBMODE_default \
 				  0<>/dev/tty$cons >&0 2>&0
 			done
-			/usr/bin/switchto 1
+			[ $tty = "/dev/console" ] && tty=1
+			/usr/bin/switchto $tty
 			ok
 		fi
 		touch /var/lock/subsys/fbset
