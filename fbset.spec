@@ -14,6 +14,7 @@ Patch0:		%{name}-fixmode.patch
 URL:		http://www.cs.kuleuven.ac.be/~geert/Console/
 BuildRequires:	flex
 Requires:	open
+Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -44,6 +45,9 @@ install etc/fb.modes.ATI $RPM_BUILD_ROOT%{_sysconfdir}/fb.modes
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/fbset
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/fbset
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
 /sbin/chkconfig --add fbset
 
@@ -51,9 +55,6 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/fbset
 if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del fbset
 fi
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
