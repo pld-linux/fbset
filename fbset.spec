@@ -1,12 +1,12 @@
 Summary:	Framebuffer utilities for changing video modes.
 Summary(pl):	Nardzêdzie do zmieniania trybu graficznego we framebufferze
 Name:		fbset
-Version:	2.0.19990118
-Release:	4
+Version:	2.1
+Release:	1
 License:	GPL
 Group:		Applications/System
 Group(pl):	Aplikacje/System
-Source0:	http://www.cs.kuleuven.ac.be/~geert/bin/%{name}-19990118.tar.gz
+Source0:	http://www.cs.kuleuven.ac.be/~geert/bin/%{name}-%{version}.tar.gz
 Source1:	fbset.init
 Source2:	fbset.sysconfig
 URL:		http://www.cs.kuleuven.ac.be/~geert/Console/
@@ -22,7 +22,7 @@ fbset jest narzêdziem do sprawdzania i zmieniania trybu graficznego na
 konsolach fbcon.
 
 %prep
-%setup -q -n fbset
+%setup -q
 
 %build
 %{__make} OPTFLAGS="$RPM_OPT_FLAGS"
