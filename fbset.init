@@ -19,6 +19,15 @@ if [ -f /etc/sysconfig/fbset ]; then
 	. /etc/sysconfig/fbset
 fi
 
+function try_load
+{
+	if [ -n "${FBMODULE}" ]; then
+		_modprobe single $FBMODULE
+	else
+		exit 0
+	fi
+}
+
 # See how we were called.
 case "$1" in
   start)
@@ -26,15 +35,12 @@ case "$1" in
 	if [ ! -f /var/lock/subsys/fbset ]; then
 		# Check if we have framebuffer in kernel.
 		if [ -f /proc/fb ]; then
+			echo a
 			# /proc files show as files with size=0, this is a workaround.
-			cat /proc/fb | grep -q "." || exit 0
+			cat /proc/fb | grep -q "." || try_load
 		else
 			# if not, then try to load specified kernel module
-			if [ -n "${FBMODULE}" ]; then
-			    _modprobe single $FBMODULE
-			else
-			    exit 0
-			fi
+			try_load
 		fi
 
 		if [ -n "${FBMODE_default}" ]; then
