@@ -1,5 +1,5 @@
 Summary:	Framebuffer utilities for changing video modes
-Summary(pl):	Narzêdzie do zmieniania ustawien framebuffera
+Summary(pl):	Narzêdzie do zmieniania ustawieñ framebuffera
 Name:		fbset
 Version:	2.1
 Release:	22
