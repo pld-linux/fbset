@@ -20,6 +20,7 @@ Group(pt_BR):	AplicaГУes/Sistema
 Group(ru):	Приложения/Система
 Group(sl):	Programi/Sistem
 Group(sv):	TillДmpningar/System
+Group(uk):	Прикладн╕ Програми/Система
 Source0:	http://home.tvd.be/cr26864/Linux/fbdev/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
