@@ -5,4 +5,6 @@
 # See /etc/fb.modes for sample video mode definitions.
 
 FBMODE_default=
+FBMODULE=
 #FBMODE_default="640x480-100"
+#FBMODULE=matroxfb
