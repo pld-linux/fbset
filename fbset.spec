@@ -82,6 +82,6 @@ fi
 %doc etc/*
 %attr(755,root,root) %{_bindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/fbset
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/fbset
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/fb.modes
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/fbset
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/fb.modes
 %{_mandir}/man*/*
