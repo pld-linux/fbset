@@ -14,7 +14,7 @@ Source4:	ftp://platan.vc.cvut.cz/pub/linux/matrox-latest/con2fb.c.gz
 # Source4-md5:	10485e073441a83f4ca26d4ccf73ab64
 Patch0:		%{name}-fixmode.patch
 Patch1:		%{name}-from-kgicon.patch
-URL:		http://home.tvd.be/cr26864/Linux/fbdev/
+URL:		http://members.chello.be/cr26864/Linux/fbdev/
 BuildRequires:	bison
 BuildRequires:	flex
 Requires(post,preun):	/sbin/chkconfig
