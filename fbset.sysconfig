@@ -12,6 +12,7 @@
 # CyberPro 20x0 - cyber2000fb
 # Hercules Mono - hgafb
 # Intel 810/830 - i810fb
+# Intel 830M/845G/852GM/855GM/865G/915G - intelfb
 # NeoMagic PCI - neofb
 # Permedia 2 - pm2fb
 # Permedia 3 - pm3fb
