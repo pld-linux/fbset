@@ -36,9 +36,7 @@ if [ -z "${FBDEV_NUM}" ]; then
 	FBDEV_NUM=0
 fi
 
-# See how we were called.
-case "$1" in
-  start)
+start() {
 	# Check if service is already running?
 	if [ ! -f /var/lock/subsys/fbset ]; then
 
@@ -89,13 +87,23 @@ case "$1" in
 	else
 		msg_already_running fbset
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	if [ -f /var/lock/subsys/fbset ]; then
 		rm -f /var/lock/subsys/fbset
 	else
 		msg_not_running fbset
 	fi
+}
+
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
 	;;
   status)
 	# Check if we have framebuffer in kernel.
@@ -110,9 +118,8 @@ case "$1" in
 	fi
 	;;
   restart|force-reload)
-	$0 stop
-	$0 start
-#	exit $?
+	stop
+	start
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|force-reload|status}"
