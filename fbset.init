@@ -10,22 +10,17 @@
 #
 # config:	/etc/sysconfig/fbset
 
-# Source function library
-. /etc/rc.d/init.d/functions
-
 # Get service config
 if [ -f /etc/sysconfig/fbset ]; then
 	. /etc/sysconfig/fbset
 fi
 
-function try_load
-{
-	if [ -n "${FBMODULE}" ]; then
-		_modprobe single $FBMODULE
-	else
-		exit 0
-	fi
-}
+if [ -z "${FBMODULE}" ]; then
+	exit 0
+fi
+
+# Source function library
+. /etc/rc.d/init.d/functions
 
 # Setting default depth
 if [ -n "${DEPTH}" ]; then
@@ -43,10 +38,10 @@ start() {
 		# Check if we have framebuffer in kernel.
 		if [ -f /proc/fb ]; then
 			# /proc files show as files with size=0, this is a workaround.
-			cat /proc/fb | grep -q "." || try_load
+			cat /proc/fb | grep -q "." || modprobe single $FBMODULE
 		else
 			# if not, then try to load specified kernel module
-			try_load
+			modprobe single $FBMODULE
 		fi
 
 		if [ -n "${FBMODE_default}" ]; then
