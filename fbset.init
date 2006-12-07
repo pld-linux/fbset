@@ -58,20 +58,21 @@ case "$1" in
 			# check if devfs (workaround: -a option don't work at all)
 			if [ -d /dev/vc ]; then
 				if [ -z "$FBTERMINALS" ]; then
-					FBTERMINALS="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
+					FBTERMINALS=$(ls /dev/vc/)
 				fi
-				FBDEV=`echo /dev/fb/${FBDEV_NUM}`
-				pattern="s/\/dev\/vc\///g"
+				FBDEV=/dev/fb/${FBDEV_NUM}
+				devpath="/dev/vc/"
 			else
 				if [ -z "$FBTERMINALS" ]; then
-					FBTERMINALS="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d:`"
+					FBTERMINALS=$(awk -F: '/^[0-9]*:/{print $1}' /etc/inittab)
 				fi
-				FBDEV=`echo /dev/fb${FBDEV_NUM}`
-				pattern="s/\/dev\/tty//g"
+				FBDEV=/dev/fb${FBDEV_NUM}
+				devpath="/dev/tty"
 			fi
 
 			# save old tty number
-			tty=`/usr/bin/tty | sed $pattern`
+			tty=$(/usr/bin/tty)
+			tty=${tty#$devpath}
 
 			for cons in $FBTERMINALS; do
 				/usr/bin/con2fb $FBDEV $cons
