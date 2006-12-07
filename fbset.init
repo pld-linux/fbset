@@ -42,10 +42,10 @@ start() {
 		# Check if we have framebuffer in kernel.
 		if [ -f /proc/fb ]; then
 			# /proc files show as files with size=0, this is a workaround.
-			cat /proc/fb | grep -q "." || modprobe single $FBMODULE
+			cat /proc/fb | grep -q "." || _modprobe single $FBMODULE
 		else
 			# if not, then try to load specified kernel module
-			modprobe single $FBMODULE
+			_modprobe single $FBMODULE
 		fi
 
 		if [ -n "${FBMODE_default}" ]; then
