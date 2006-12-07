@@ -58,15 +58,13 @@ case "$1" in
 			# check if devfs (workaround: -a option don't work at all)
 			if [ -d /dev/vc ]; then
 				if [ -z "$FBTERMINALS" ]; then
-					FBTERMINALS=\
-					  "`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
+					FBTERMINALS="`ls /dev/vc/* | sed 's|/dev/vc/||g'`"
 				fi
 				FBDEV=`echo /dev/fb/${FBDEV_NUM}`
 				pattern="s/\/dev\/vc\///g"
 			else
 				if [ -z "$FBTERMINALS" ]; then
-					FBTERMINALS=\
-					  "`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d:`"
+					FBTERMINALS="`cat /etc/inittab | grep '^[0-9]*:' | cut -f1 -d:`"
 				fi
 				FBDEV=`echo /dev/fb${FBDEV_NUM}`
 				pattern="s/\/dev\/tty//g"
