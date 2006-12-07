@@ -16,7 +16,11 @@ if [ -f /etc/sysconfig/fbset ]; then
 fi
 
 if [ -z "${FBMODULE}" ]; then
-	exit 0
+   	case "$1" in
+	start|stop|restart|force-reload)
+		exit 0
+		;;
+	esac
 fi
 
 # Source function library
