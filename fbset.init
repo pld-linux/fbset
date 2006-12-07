@@ -110,12 +110,10 @@ case "$1" in
 	if [ -f /proc/fb ]; then
 		# /proc files show as files with size=0, this is a workaround.
 		cat /proc/fb | grep -q "." && nls "Frame buffer present." && exit 0
-		nls "Frame buffer not present."
-		exit 3
-	else
-		nls "Frame buffer not present."
-		exit 3
 	fi
+
+	nls "Frame buffer not present."
+	exit 3
 	;;
   restart|force-reload)
 	stop
