@@ -1,0 +1,6 @@
+- release 15
+- new in init-scripts:
+  - DEPTH option
+  - restart-all option - set resolution on all consoles
+  - better stop
+  STB
