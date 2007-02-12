@@ -1,0 +1,3 @@
+- Zmieniłem fbset, żeby działał na podobnej zasadzie jak hdparm, tzn. podczas
+  startu systemu ustawiał tryby graficzne globalnie i dodatkowo dla każdej
+  konsoli z osobna (jeśli jest zdefiniowane).
