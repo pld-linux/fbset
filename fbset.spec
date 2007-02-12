@@ -1,5 +1,5 @@
 Summary:	Framebuffer utilities for changing video modes
-Summary(pl):	Narzêdzie do zmieniania ustawieñ framebuffera
+Summary(pl.UTF-8):   NarzÄ™dzie do zmieniania ustawieÅ„ framebuffera
 Name:		fbset
 Version:	2.1
 Release:	30
@@ -31,11 +31,11 @@ terminals.
 Note: modeline2fb script (which translates XFree86 modelines to
 fb.modes entries) requires perl.
 
-%description -l pl
-fbset jest narzêdziem do sprawdzania i zmieniania trybu graficznego na
+%description -l pl.UTF-8
+fbset jest narzÄ™dziem do sprawdzania i zmieniania trybu graficznego na
 terminalach fbcon.
 
-Uwaga: skrypt modeline2fb (s³u¿±cy do t³umaczenia modeline'ów XFree86
+Uwaga: skrypt modeline2fb (sÅ‚uÅ¼Ä…cy do tÅ‚umaczenia modeline'Ã³w XFree86
 na wpisy fb.modes) wymaga perla.
 
 %prep
