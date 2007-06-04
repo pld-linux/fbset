@@ -1,0 +1,11 @@
+--- con2fb.c.o	2007-06-04 13:44:42.591503000 +0000
++++ con2fb.c	2007-06-04 13:42:14.696938000 +0000
+@@ -2,7 +2,7 @@
+  * You can specify devices & consoles by both numbers and devices. Framebuffers numbers
+  * are zero based (/dev/fb0 ... ), consoles begins with 1 (/dev/tty1 ... )
+  */
+-#include <linux/fb.h>
++#include "fb.h"
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
