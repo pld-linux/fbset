@@ -14,6 +14,7 @@ Source4:	ftp://platan.vc.cvut.cz/pub/linux/matrox-latest/con2fb.c.gz
 # Source4-md5:	10485e073441a83f4ca26d4ccf73ab64
 Patch0:		%{name}-fixmode.patch
 Patch1:		%{name}-from-kgicon.patch
+Patch2:		%{name}-con2fb.patch
 URL:		http://members.chello.be/cr26864/Linux/fbdev/
 BuildRequires:	bison
 BuildRequires:	flex
@@ -44,6 +45,7 @@ na wpisy fb.modes) wymaga perla.
 %patch1 -p1
 cp %{SOURCE4} .
 gunzip con2fb.c.gz
+%patch2 -p0
 rm -r etc/CVS
 
 %build
