@@ -40,18 +40,21 @@ start() {
 	if [ ! -f /var/lock/subsys/fbset ]; then
 
 		# Check if we have framebuffer in kernel.
+		local load_fbmodule=1
 		if [ -f /proc/fb ]; then
 			# /proc files show as files with size=0, this is a workaround.
-			cat /proc/fb | grep -q "." || _modprobe single $FBMODULE
-		else
-			# if not, then try to load specified kernel module
-			_modprobe single $FBMODULE
+			grep -q '.' /proc/fb && load_fbmodule=0
+		fi
+
+		if [ "$load_fbmodule" = "1" ]; then
+			modprobe $FBMODULE
 		fi
 
 		if [ -n "${FBMODE_default}" ]; then
 			show "Setting default video mode"
 			busy
 
+			local cons tty devpath
 			# check if devfs (workaround: -a option don't work at all)
 			if [ -d /dev/vc ]; then
 				if [ -z "$FBTERMINALS" ]; then
@@ -75,7 +78,7 @@ start() {
 				/usr/bin/con2fb $FBDEV $cons
 				/usr/bin/switchto $cons
 				/usr/bin/fbset -fb \
-				  $FBDEV ${DEPTH_options} $FBMODE_default \
+				  $FBDEV $DEPTH_options $FBMODE_default \
 				  0<>/dev/tty$cons >&0 2>&0
 			done
 			[ $tty = "/dev/console" ] && tty=1
@@ -106,9 +109,9 @@ case "$1" in
 	;;
   status)
 	# Check if we have framebuffer in kernel.
-	if [ -f /proc/fb ]; then
-		# /proc files show as files with size=0, this is a workaround.
-		cat /proc/fb | grep -q "." && nls "Frame buffer present." && exit 0
+	if [ -f /proc/fb ] && grep -q . /proc/fb; then
+	   	nls "Frame buffer present."
+		exit 0
 	fi
 
 	nls "Frame buffer not present."
