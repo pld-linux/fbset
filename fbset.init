@@ -63,8 +63,11 @@ start() {
 				FBDEV=/dev/fb/$FBDEV_NUM
 				devpath=/dev/vc/
 			else
-				if [ -z "$FBTERMINALS" -d /dev/.udev ]; then
+				if [ -z "$FBTERMINALS" -a -d /dev/.udev ]; then
 					FBTERMINALS=$(ls /dev/vcsa* | awk '{print substr($0, length("/dev/vcsa") + 1)}')
+				fi
+				if [ -z "$FBTERMINALS" -a -d /sys/class/vc ]; then
+					FBTERMINALS=$(ls -d /sys/class/vc/vcsa* | awk '{print substr($0, length("/sys/class/vc/vcsa") + 1)}')
 				fi
 				if [ -z "$FBTERMINALS" ]; then
 					FBTERMINALS=$(awk -F: '/^[0-9]*:/{print $1}' /etc/inittab)
