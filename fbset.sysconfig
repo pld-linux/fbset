@@ -23,24 +23,25 @@
 # Virtual Framebuffer - vfb
 # VGA 16-color - vga16fb
 
-# Select default display mode
-FBMODE_default=
-
 # Select card driver
 FBMODULE=
+
+# Select default display mode. This gets activated on $FBTERMINALS
+FBMODE_default=""
 
 # Display color depth
 DEPTH=
 
-# Framebuffer number if you have two or more
+# Framebuffer device number (if you have two or more)
 FBDEV_NUM=
 
-# Terminal number to run framebuffer on:
+# Terminals to init framerbuffer on.
+# If not set autodetection from devfs or from /etc/inittab takes place.
 FBTERMINALS=
 
 # For example:
-#FBMODE_default="640x480-100"
 #FBMODULE=matroxfb
+#FBMODE_default="640x480-100"
 #DEPTH=16
 #FBDEV_NUM=0
 #FBTERMINALS="1 2 3 4 5 6 7 8"
