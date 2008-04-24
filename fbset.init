@@ -55,19 +55,22 @@ start() {
 			busy
 
 			local cons tty devpath
-			# check if devfs (workaround: -a option don't work at all)
+			# check if devfs
 			if [ -d /dev/vc ]; then
 				if [ -z "$FBTERMINALS" ]; then
 					FBTERMINALS=$(ls /dev/vc/)
 				fi
-				FBDEV=/dev/fb/${FBDEV_NUM}
-				devpath="/dev/vc/"
+				FBDEV=/dev/fb/$FBDEV_NUM
+				devpath=/dev/vc/
 			else
+				if [ -z "$FBTERMINALS" -d /dev/.udev ]; then
+					FBTERMINALS=$(ls /dev/vcsa* | awk '{print substr($0, length("/dev/vcsa") + 1)}')
+				fi
 				if [ -z "$FBTERMINALS" ]; then
 					FBTERMINALS=$(awk -F: '/^[0-9]*:/{print $1}' /etc/inittab)
 				fi
-				FBDEV=/dev/fb${FBDEV_NUM}
-				devpath="/dev/tty"
+				FBDEV=/dev/fb$FBDEV_NUM
+				devpath=/dev/tty
 			fi
 
 			# save old tty number
