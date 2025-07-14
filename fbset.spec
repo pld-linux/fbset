@@ -41,11 +41,11 @@ na wpisy fb.modes) wymaga perla.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 cp %{SOURCE4} .
 gunzip con2fb.c.gz
-%patch2 -p0
+%patch -P2 -p0
 rm -r etc/CVS
 
 %build
